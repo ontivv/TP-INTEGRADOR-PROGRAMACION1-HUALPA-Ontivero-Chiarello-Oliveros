@@ -1,4 +1,9 @@
-#numeros
+def validar_no_vacio(texto): #validacion de string con espacios vacios
+    #comprobamos si la longitud es mayor a 0
+    return len(texto.strip()) > 0
+
+
+
 def validar_numeros_enteros(): #solo permite enteros
     try:
         if isinstance(x,str):
@@ -10,7 +15,7 @@ def validar_numeros_enteros(): #solo permite enteros
     except ZeroDivisionError:
         return False
 
-def validar_numeros_positivos(x): #solo permite numeros naturales (1:infinito)
+def validar_numero_positivo(x): #solo permite numeros naturales (1:infinito)
     try:
         if isinstance(x,str):
             return False
@@ -21,8 +26,7 @@ def validar_numeros_positivos(x): #solo permite numeros naturales (1:infinito)
     except ZeroDivisionError:
         return False
 
-#######      .isspace()      verifica si solo hay espacio en blanco por ejemplo   "     " = True, "hola  " = False
-def vfloat(x):   #valida numeros con decimales
+def validar_numero_flotante(x):   #valida numeros con decimales
     try:
         if isinstance(x,str):
             return False
