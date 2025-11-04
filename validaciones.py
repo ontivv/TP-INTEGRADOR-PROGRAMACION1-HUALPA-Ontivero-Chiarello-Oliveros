@@ -1,5 +1,5 @@
 #numeros
-def ventero(): #solo permite enteros
+def validar_numeros_enteros(): #solo permite enteros
     try:
         if isinstance(x,str):
             return False
@@ -10,7 +10,7 @@ def ventero(): #solo permite enteros
     except ZeroDivisionError:
         return False
 
-def vpositivo(x): #solo permite numeros naturales (1:infinito)
+def validar_numeros_positivos(x): #solo permite numeros naturales (1:infinito)
     try:
         if isinstance(x,str):
             return False
@@ -34,7 +34,7 @@ def vfloat(x):   #valida numeros con decimales
         return False
 
 
-def producto_precio(nombre,precio):  #valida el nombre y precio que debe ser en decimales
+def alta_producto(nombre,precio):  #valida el nombre y precio que debe ser en decimales
     if nombre.isspace():
         return False
     else:
