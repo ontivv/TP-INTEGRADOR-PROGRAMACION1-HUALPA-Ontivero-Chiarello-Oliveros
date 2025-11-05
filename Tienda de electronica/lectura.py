@@ -1,47 +1,71 @@
 import os
 import csv
 
+# --- en lectura.py ---
+import os
+import csv
+
+CARPETA_RAIZ = "datos"
+
 def cargar_datos_recursivo(ruta_actual):
     """
-    función recursiva que explora 'ruta_actual' y devuelve
-    una lista de todos los items (diccionarios) encontrados
-    en los 'items.csv' anidados.
+    Recorre recursivamente la estructura de carpetas desde 'ruta_actual',
+    lee todos los archivos 'items.csv' y consolida los datos
+    en una única lista de diccionarios.
     """
-    
-    lista_items = []
-    
+    lista_global_items = []
+
     try:
-        #el explorador mira que hay en la 'ruta actual'
         elementos = os.listdir(ruta_actual)
-    except OSError:
-        print(f"ERROR: No se pudo leer {ruta_actual}")
-        return [] #devuelve mochila vacía si hay error
-    
-    if not elementos:
-        print(f"Info: el directorio {ruta_actual} está vacío.")
+    except FileNotFoundError:
+        print(f"Advertencia: El directorio '{ruta_actual}' no existe. Creándolo.")
+        os.makedirs(CARPETA_RAIZ, exist_ok=True)
         return []
-    
+    except OSError as e:
+        print(f"Error de OS al leer la ruta {ruta_actual}: {e}")
+        return []
+
+    if not elementos:
+        return [] # Directorio vacío
+
     for elemento in elementos:
-        ruta_completa = os.path.join(ruta_actual,elemento)
+        ruta_completa = os.path.join(ruta_actual, elemento)
+
+        if os.path.isdir(ruta_completa):
+            items_hijos = cargar_datos_recursivo(ruta_completa)
+            lista_global_items.extend(items_hijos)
         
-        if os.path.isfile(ruta_completa) and elemento == "items.csv": #evalúa si es el archivo csv
+        elif os.path.isfile(ruta_completa) and elemento == "items.csv": # O el nombre que uses
             try:
-                with open(ruta_completa, 'r', encoding='utf-8') as f:
+                with open(ruta_completa, mode='r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
                     for fila in reader:
-                        # guardamos su origen para Modificar/Eliminar
-                        fila["ruta_origen"] = ruta_completa
-                        # lo guardamos en la lista
-                        lista_items.append(fila)
                         
+                        # --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+                        try:
+                            # Convertimos los strings a números
+                            fila['precio'] = float(fila['precio'])
+                            fila['stock'] = int(fila['stock'])
+                            
+                            # Guardamos la ruta de origen
+                            fila['ruta_origen'] = ruta_completa
+                            
+                            # Solo agregamos la fila si la conversión fue exitosa
+                            lista_global_items.append(fila)
+                            
+                        except (ValueError, TypeError, KeyError) as e:
+                            # Si 'precio' o 'stock' no son números,
+                            # o falta una clave, la fila está corrupta.
+                            print(f"Error: Dato corrupto en {ruta_completa}. Fila omitida: {fila}. Error: {e}")
+                            continue # Salta esta fila y sigue con la siguiente
+                        # --- FIN DE LA CORRECCIÓN ---
+                        
+            except IOError as e:
+                print(f"Error de E/S al leer {ruta_completa}: {e}")
             except Exception as e:
-                print(f"Error leyendo {ruta_completa}: {e}")
+                print(f"Error inesperado procesando {ruta_completa}: {e}")
 
-        elif os.path.isdir(ruta_completa): #evalúa si es un directorio
-            items_del_clon = cargar_datos_recursivo(ruta_completa)
-            lista_items.extend(items_del_clon)
-    
-    return lista_items
+    return lista_global_items
 
 def mostrar_todos_los_items(lista_items):
     """
