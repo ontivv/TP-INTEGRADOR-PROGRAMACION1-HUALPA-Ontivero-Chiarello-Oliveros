@@ -4,6 +4,7 @@ from crud import alta_producto, modificar_producto, eliminar_producto
 from estadisticas import mostrar_estadisticas, ordenar_productos # <-- AÑADIDAS
 
 CARPETA_RAIZ = "datos"
+FIELDNAMES = ["id", "nombre", "precio", "stock"]
 
 def menu_principal():
     print("Cargando base de datos...")
@@ -36,10 +37,10 @@ def menu_principal():
             filtrar_por_atributo(DATOS_EN_MEMORIA)
             
         elif opcion == '4':
-            modificar_producto(DATOS_EN_MEMORIA) #modifica en memoria Y disco
+            modificar_producto(DATOS_EN_MEMORIA,FIELDNAMES) #modifica en memoria Y disco
             
         elif opcion == '5':
-            eliminar_producto(DATOS_EN_MEMORIA) #elimina de memoria Y disco
+            eliminar_producto(DATOS_EN_MEMORIA,FIELDNAMES) #elimina de memoria Y disco
             
         elif opcion == '6':
             mostrar_estadisticas(DATOS_EN_MEMORIA) #solo lee de memoria
