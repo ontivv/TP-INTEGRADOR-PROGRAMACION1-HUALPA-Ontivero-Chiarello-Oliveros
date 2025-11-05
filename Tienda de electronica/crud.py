@@ -142,7 +142,7 @@ def modificar_producto(lista_global_items, FIELDNAMES):
     
     # La lista global debe pasarse como argumento desde el módulo principal
     if not lista_global_items: 
-        print("No hay datos cargados para modificar. Ejecute la lectura primero.") 
+        print("No hay datos cargados para modificar. Ejecuta la lectura primero.") 
         return 
     
     # --- 1. Identificación y Búsqueda ---
