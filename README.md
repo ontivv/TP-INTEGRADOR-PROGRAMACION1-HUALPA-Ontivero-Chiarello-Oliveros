@@ -34,3 +34,7 @@ validaciones.py: Funciones reutilizables para validar entradas (números positiv
 # LINK DEL VIDEO:
 
 https://drive.google.com/file/d/1f9OfXvqVxYe3klh_EvnrsX_Bh3LAIKXm/view?usp=sharing
+
+# LINK DEL REPO:
+
+https://github.com/ontivv/TP-INTEGRADOR-PROGRAMACION1-HUALPA-Ontivero-Chiarello-Oliveros.git
