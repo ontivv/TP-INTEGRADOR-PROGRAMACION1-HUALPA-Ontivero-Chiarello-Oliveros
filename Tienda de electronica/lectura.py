@@ -1,6 +1,3 @@
-import os
-import csv
-
 # --- en lectura.py ---
 import os
 import csv
@@ -39,9 +36,8 @@ def cargar_datos_recursivo(ruta_actual):
             try:
                 with open(ruta_completa, mode='r', encoding='utf-8') as f:
                     reader = csv.DictReader(f)
+                    
                     for fila in reader:
-                        
-                        # --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
                         try:
                             # Convertimos los strings a números
                             fila['precio'] = float(fila['precio'])
@@ -58,7 +54,7 @@ def cargar_datos_recursivo(ruta_actual):
                             # o falta una clave, la fila está corrupta.
                             print(f"Error: Dato corrupto en {ruta_completa}. Fila omitida: {fila}. Error: {e}")
                             continue # Salta esta fila y sigue con la siguiente
-                        # --- FIN DE LA CORRECCIÓN ---
+                        
                         
             except IOError as e:
                 print(f"Error de E/S al leer {ruta_completa}: {e}")
@@ -86,7 +82,7 @@ def mostrar_todos_los_items(lista_items):
         #intentamos extraer la jerarquía de datos para mostrar la lista de items
         try:
             partes_ruta = item["ruta_origen"].split(os.sep)
-            jerarquia = f"({partes_ruta[1]} / {partes_ruta[2]})" #asumimos la estructura datos/Nivel1/Nivel2/archivo
+            jerarquia = f"({partes_ruta[1]} / {partes_ruta[2]})" #asumimos la estructura datos\Nivel1\Nivel2\archivo
 
         except (KeyError, IndexError):
             jerarquia = "(Jerarquía desconocida)"
