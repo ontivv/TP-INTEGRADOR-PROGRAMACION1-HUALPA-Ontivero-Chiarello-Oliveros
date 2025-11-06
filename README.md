@@ -30,3 +30,7 @@ crud.py: Funciones que escriben en disco (Alta, Modificación, Eliminación).
 estadisticas.py: Calcula estadísticas (promedios, conteos) y ordena los datos.
 
 validaciones.py: Funciones reutilizables para validar entradas (números positivos, no vacíos).
+
+# LINK DEL VIDEO:
+
+https://drive.google.com/file/d/1f9OfXvqVxYe3klh_EvnrsX_Bh3LAIKXm/view?usp=sharing
